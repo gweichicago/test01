@@ -1,0 +1,17 @@
+{
+  "name": "Pier88Health",
+  "description": "Pier88Health test1",
+  "version": "1.0.0",
+  "author": {
+    "name": "Pier88Health Engineering",
+    "email": "gwei@pier88health.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gweip8h/test01"
+  },
+  "private": true,
+  "dependencies": {
+    "express": "4.16.2"
+  }
+}
