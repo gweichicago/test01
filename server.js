@@ -1,6 +1,16 @@
-let http = require('http');
-http.createServer(function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello World\n');
-}).listen(3000, '127.0.0.1');
-console.log('Server running at http://127.0.0.1:3000/');
+/*jslint node:true es6:true*/
+let express = require('express'),
+    app = express(),
+    serviceGateway = require('./backend/framework/ServiceGateway.js');
+
+
+
+app.get('/svc/:ServiceName/:MethodName', serviceGateway.ProcessRequest);
+app.post('/svc/:ServiceName/:MethodName', serviceGateway.ProcessRequest);
+
+app.get('/', function (req, res) {
+    'use strict';
+    console.log(req.params);
+    res.send('Hello world');
+});
+app.listen(3000);
