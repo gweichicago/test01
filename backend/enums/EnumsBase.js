@@ -1,9 +1,10 @@
 /*jslint node:true es6:true*/
-var EnumsBase = {
+let EnumsBase = {
     EMPTY_VALUE: '_empty_',
     SetNames: function (enums, propName) {
+        'user strict';
         // use a POFL through Object.keys for best performance vs. a "for in" loop
-        var keysA = Object.keys(enums),
+        let keysA = Object.keys(enums),
             keysB,
             i,
             j,
@@ -13,7 +14,9 @@ var EnumsBase = {
             name;
         for (i = 0; i < len; i += 1) {
             item = keysA[i];
-            keysB = typeof enums[item] === 'object' ? Object.keys(enums[item]) : [];
+            keysB = typeof enums[item] === 'object'
+                ? Object.keys(enums[item])
+                : [];
             jlen = keysB.length;
             if (jlen) {
                 for (j = 0; j < jlen; j += 1) {
@@ -40,7 +43,8 @@ var EnumsBase = {
         }
     },
     ReturnValues: function (enums) {
-        var keys = Object.keys(enums),
+        'user strict';
+        let keys = Object.keys(enums),
             i,
             len = keys.length,
             ret = [];
@@ -52,7 +56,8 @@ var EnumsBase = {
         return ret;
     },
     GetByValue: function (enums, value) {
-        var keys = Object.keys(enums),
+        'user strict';
+        let keys = Object.keys(enums),
             len = keys.length,
             i,
             ret;
