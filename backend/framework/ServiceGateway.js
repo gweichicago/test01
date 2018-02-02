@@ -1,5 +1,5 @@
 /*jslint node:true es6:true*/
-let p8Auth = require('./P8Auth.js');
+let p8Auth = require('../security/P8Auth.js');
 function processRequest(req, res) {
     'user strict';
     p8Auth.AuthRequest({
