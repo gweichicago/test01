@@ -1,13 +1,18 @@
 /*jslint node:true es6:true*/
-
-
+let p8Auth = require('./P8Auth.js');
 function processRequest(req, res) {
     'user strict';
-    console.log('query', req.query);
-    console.log('body', req.body);
-    console.log(req.params.ServiceName);
-    console.log(req.params.MethodName);
-    res.send(req.query);
+    p8Auth.AuthRequest({
+        ServiceName: req.params.ServiceName,
+        MethodName: req.params.MethodName
+    }, function (error, currentuser) {
+        if (error) {
+            console.log(error);
+            return res.send(error);
+        }
+        console.log(currentuser);
+        res.send(currentuser);
+    });
 }
 
 module.exports = {
