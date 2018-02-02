@@ -1,4 +1,5 @@
 /*jslint node:true es6:true*/
+
 function authRequest(params, callback) {
     'user strict';
     console.log(params);
