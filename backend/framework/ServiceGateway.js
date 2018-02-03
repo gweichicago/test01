@@ -1,5 +1,6 @@
 /*jslint node:true es6:true*/
-let p8Auth = require('../security/P8Auth.js');
+let p8Auth = require('../security/P8Auth.js'),
+    services = require('./WebServices.js');
 function processRequest(req, res) {
     'user strict';
     p8Auth.AuthRequest({
@@ -10,8 +11,14 @@ function processRequest(req, res) {
             console.log(error);
             return res.send(error);
         }
-        console.log(currentuser);
-        res.send(currentuser);
+        if (services[req.params.ServiceName] && services[req.params.ServiceName][req.params.MethodName]) {
+            return services[req.params.ServiceName][req.params.MethodName]({
+                currentuser: currentuser,
+                req: req,
+                res: res
+            });
+        }
+        res.send("Invalid ServiceName or MethodName");
     });
 }
 
