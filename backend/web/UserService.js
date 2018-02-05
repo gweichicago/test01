@@ -1,5 +1,5 @@
 /*jslint node:true es6:true*/
-let userBll = require('../business/UserBll.js'),
+let userBll = require('../framework/BllPack.js').User,
     responseHelper = require('../framework/ResponseHelper');
 function login(params) {
     'user strict';
