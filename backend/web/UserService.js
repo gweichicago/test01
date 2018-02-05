@@ -11,11 +11,14 @@ function login(params) {
 
 function createUser(params) {//before going live, this will require a token to prove the user isn't a robot
     'user strict';
-    userBll.CreateUser(params, function (error, data) {
+    userBll.CreateUser({
+        UserName: params.req.body.UserName,
+        Password: params.req.body.Password
+    }, function (error, data) {
         if (error) {
-            return responseHelper.SendError(error);
+            return responseHelper.SendError(params.res, error);
         }
-        responseHelper.SendData(data);
+        responseHelper.SendData(params.res, data);
     });
 }
 module.exports = {
