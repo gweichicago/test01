@@ -4,6 +4,7 @@ let express = require('express'),
     cookieParser = require('cookie-parser'),
     DbConnections = require('./backend/framework/DbConnections.js'),
     async = require('async'),
+    port = process.env.PORT || 8095,
     bodyParser = require('body-parser'),
     bodyParserUrl = bodyParser.urlencoded({
         extended: true,
