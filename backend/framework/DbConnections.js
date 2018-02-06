@@ -13,29 +13,21 @@ mongoose.Promise = global.Promise;
 dbs.forEach(function (dbName) {
     'use strict';
     options[dbName] = {
-        db: {
-            native_parser: true
-        },
-        server: {
-            poolSize: process.env.POOL_SIZE || 2,
-            readPreference: 'primaryPreferred',
-            socketOptions: {
-                keepAlive: 1,
-                connectTimeoutMS: 30000,
-                auto_reconnect: true
-            }
-        }
+        native_parser: true,
+        poolSize: process.env.POOL_SIZE || 2,
+        readPreference: 'primaryPreferred',
+        keepAlive: 1,
+        connectTimeoutMS: 30000,
+        auto_reconnect: true
     };
     if (config.mongodb.replica !== '') {
         options[dbName].replSet = {
             poolSize: process.env.POOL_SIZE || 2,
             rs_name: replicaSets[dbName],
             readPreference: 'primaryPreferred',
-            socketOptions: {
-                keepAlive: 1,
-                connectTimeoutMS: 30000,
-                auto_reconnect: true
-            }
+            keepAlive: 1,
+            connectTimeoutMS: 30000,
+            auto_reconnect: true
         };
     }
 });
