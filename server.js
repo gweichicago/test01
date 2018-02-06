@@ -2,6 +2,7 @@
 let express = require('express'),
     app = express(),
     cookieParser = require('cookie-parser'),
+    DbConnections = require('./backend/framework/DbConnections.js'),
     async = require('async'),
     bodyParser = require('body-parser'),
     bodyParserUrl = bodyParser.urlencoded({
@@ -36,4 +37,7 @@ app.get('/', function (req, res) {
     console.log(req.params);
     res.send('Hello world');
 });
-app.listen(3000);
+DbConnections.init(function () {
+    'use strict';
+    app.listen(3000);
+});
