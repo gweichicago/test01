@@ -6,6 +6,7 @@ let express = require('express'),
     async = require('async'),
     port = process.env.PORT || 8095,
     bodyParser = require('body-parser'),
+    maxConnections = 100000,
     bodyParserUrl = bodyParser.urlencoded({
         extended: true,
         keepExtensions: true,
@@ -18,7 +19,7 @@ let express = require('express'),
         }),
         bodyParserUrl
     ],
-    serviceGateway = require('./backend/framework/ServiceGateway.js');
+    serviceGateway;
 
 function parallel(middlewares) {
     'use strict';
@@ -29,10 +30,6 @@ function parallel(middlewares) {
     };
 }
 
-app.use(parallel(middleWares));
-app.get('/svc/:ServiceName/:MethodName', serviceGateway.ProcessRequest);
-app.post('/svc/:ServiceName/:MethodName', serviceGateway.ProcessRequest);
-
 app.get('/', function (req, res) {
     'use strict';
     console.log(req.params);
@@ -40,5 +37,11 @@ app.get('/', function (req, res) {
 });
 DbConnections.init(function () {
     'use strict';
-    app.listen(3000);
+    serviceGateway = require('./backend/framework/ServiceGateway.js');
+    app.use(parallel(middleWares));
+    app.get('/svc/:ServiceName/:MethodName', serviceGateway.ProcessRequest);
+    app.post('/svc/:ServiceName/:MethodName', serviceGateway.ProcessRequest);
+    app.listen(port, maxConnections, function () {
+        console.log(process.pid);
+    });
 });

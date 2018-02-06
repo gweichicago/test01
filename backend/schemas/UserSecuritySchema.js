@@ -4,7 +4,7 @@ var P8Schema = require('../framework/P8Schema.js'),
     props = {
         UserName: {type: String},
         FirstName: {type: String},
-        Status: {type: String, enum: [UserSecurityStatus.Active, UserSecurityStatus.PasswordChangeRequired, UserSecurityStatus.Suspended, UserSecurityStatus.LockedOut], default: UserSecurityStatus.Active},
+        Status: {type: String, enum: Object.keys(UserSecurityStatus), default: UserSecurityStatus.Active},
         LowercaseUserName: {type: String},
         Password: {type: String},
         Password_PBKDF2: {type: String},
@@ -13,5 +13,5 @@ var P8Schema = require('../framework/P8Schema.js'),
         PasswordExpiration: {type: Number}
     },
     UserSecuritySchema = new P8Schema(props);
-
+console.log('here');
 exports.UserSecurity = DbConnections.p8security.model('UserSecurity', UserSecuritySchema, 'UserSecurity');
