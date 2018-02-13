@@ -9,17 +9,18 @@ function login(params) {
     params.res.send("Wrong username or password");
 }
 
-function createUser(params) {//before going live, this will require a token to prove the user isn't a robot
+async function createUser(params) {//before going live, this will require a token to prove the user isn't a robot
     'user strict';
-    userBll.CreateUser({
-        UserName: params.req.body.UserName,
-        Password: params.req.body.Password
-    }, function (error, data) {
-        if (error) {
-            return responseHelper.SendError(params.res, error);
-        }
-        responseHelper.SendData(params.res, data);
-    });
+    try {
+        let user = await userBll.CreateUser({
+            UserName: params.req.body.UserName,
+            Password: params.req.body.Password
+        });
+        responseHelper.SendData(params.res, user);
+    }
+    catch (error) {
+        return responseHelper.SendError(params.res, error);        
+    }
 }
 module.exports = {
     Login: login,

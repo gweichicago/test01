@@ -1,14 +1,20 @@
 /*jslint node:true es6:true*/
 let SchemaPack = require("../framework/SchemaPack.js"),
     guid = require('uuid');
-function createUser(params, callback) {
+async function createUser(params) {
     'user strict';
-    let userSecurity = new SchemaPack.UserSecurity({
-        p8Id: guid.v1(),
-        UserName: params.UserName,
-        Password: params.Password
-    });
-    userSecurity.save(callback);
+    try {
+	    let userSecurity = new SchemaPack.UserSecurity({
+	        p8Id: guid.v1(),
+	        UserName: params.UserName,
+	        Password: params.Password
+	    }),
+	    result = await userSecurity.save();
+	    return result;
+    }
+    catch (error) {
+    	throw error;
+    }
 }
 
 
