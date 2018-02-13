@@ -4,7 +4,7 @@ let express = require('express'),
     cookieParser = require('cookie-parser'),
     DbConnections = require('./backend/framework/DbConnections.js'),
     async = require('async'),
-    port = process.env.PORT || 8095,
+    port = process.env.PORT || 8888,
     bodyParser = require('body-parser'),
     maxConnections = 100000,
     bodyParserUrl = bodyParser.urlencoded({
@@ -24,7 +24,7 @@ let express = require('express'),
 function parallel(middlewares) {
     'use strict';
     return function (req, res, next) {
-        async.each(middlewares, function (mw, cb) {
+        async.each(middlewares, (mw, cb) => {
             mw(req, res, cb);
         }, next);
     };
