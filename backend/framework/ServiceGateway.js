@@ -3,18 +3,23 @@ let p8Auth = require('../security/P8Auth.js'),
     services = require('./WebServices.js');
 async function processRequest(req, res) {
     'user strict';
-    let currentuser = await p8Auth.AuthRequest({
-        ServiceName: req.params.ServiceName,
-        MethodName: req.params.MethodName
-    });
-    if (services[req.params.ServiceName] && services[req.params.ServiceName][req.params.MethodName]) {
-        return services[req.params.ServiceName][req.params.MethodName]({
-            currentuser: currentuser,
-            req: req,
-            res: res
+    try {
+        let currentuser = await p8Auth.AuthRequest({
+            ServiceName: req.params.ServiceName,
+            MethodName: req.params.MethodName
         });
+        if (services[req.params.ServiceName] && services[req.params.ServiceName][req.params.MethodName]) {
+            return services[req.params.ServiceName][req.params.MethodName]({
+                currentuser: currentuser,
+                req: req,
+                res: res
+            });
+        }
     }
-    res.send("Invalid ServiceName or MethodName");
+    catch (error) {
+        console.log(error);
+        res.send("Invalid ServiceName or MethodName");
+    }
     // p8Auth.AuthRequest({
     //     ServiceName: req.params.ServiceName,
     //     MethodName: req.params.MethodName
